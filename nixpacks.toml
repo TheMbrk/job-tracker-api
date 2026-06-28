@@ -1,0 +1,18 @@
+# Railway / Nixpacks build config for Laravel 13 + PHP 8.3
+# Docs: https://nixpacks.com/docs/configuration/file
+
+[variables]
+# PHP extensions needed for this app
+NIXPACKS_PHP_EXTENSIONS = "pgsql,pdo_pgsql,mbstring,xml,curl,zip,fileinfo,bcmath,dom,ctype,tokenizer"
+
+[phases.build]
+cmds = [
+    "composer install --no-dev --optimize-autoloader",
+    "php artisan storage:link --force",
+    "php artisan config:cache",
+    "php artisan route:cache",
+    "php artisan view:cache"
+]
+
+[start]
+cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"
